@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pdfrx/pdfrx.dart';
-import 'package:snappy_list_view/snappy_list_view.dart';
+import 'screens/viewer.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
 void main() {
@@ -12,12 +11,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlutterSizer(
-      builder: (context, orientation, screenType) {    
-        return MaterialApp(
+    return MaterialApp(
       title: 'Pdfrx example',
-      home: MainPage());
-      }
+      home: MainPage()
     );
   }
 }
@@ -45,52 +41,7 @@ class _MainPageState extends State<MainPage> {
         toolbarHeight: 30.0,
        // titleTextStyle: TextStyle(fontSize: 20),
       ),
-      body: PdfDocumentViewBuilder.asset(
-        'assets/sample.pdf',
-        builder: (context, document) => SnappyListView(
-          scrollDirection: Axis.horizontal,
-          controller: controller,
-          itemSnapping: true,
-          itemCount: document?.pages.length ?? 0,
-          itemBuilder: (context, index) {
-            index *= 2;
-            return Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.all(0),
-              height: 100.0.h,
-              color: Colors.white,
-              child: Row(
-                children: 
-                [ SizedBox(
-                  width: 50.0.w,
-                  height: 100.0.h,
-                  child: PdfPageView(
-                    decoration: BoxDecoration(
-                      boxShadow: null
-                    ) ,
-                    document: document,
-                    pageNumber: index + 1,
-                    alignment: Alignment.centerRight,
-                  ),
-                ),
-                  SizedBox(
-                    width: 50.0.w,
-                    height: 100.0.h,
-                    child: PdfPageView(
-                      decoration: BoxDecoration(
-                        boxShadow: null
-                      ),
-                      document: document,
-                      pageNumber: index + 2,
-                      alignment: Alignment.centerLeft,
-                    ),
-                  ),
-                ],
-              )
-            );
-          },
-        ),
-      ),
+      body: PdfView()
     );
   }
 }
