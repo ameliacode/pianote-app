@@ -16,6 +16,7 @@ class _PdfViewState extends State<PdfView> {
   
   // List<PdfDocument> data = [];
   int _focusedIndex = 0;
+  GlobalKey<ScrollSnapListState> sslkey = GlobalKey();
 
   void _onItemFocus(int index){
     setState(() {
@@ -30,7 +31,10 @@ class _PdfViewState extends State<PdfView> {
       return PdfDocumentViewBuilder.asset(
         'assets/sample.pdf',
         builder: (context, document) => ScrollSnapList(
+          key: sslkey,
+          listViewKey: widget.key,
           scrollDirection: Axis.horizontal,
+          scrollPhysics: PageScrollPhysics(),
           onItemFocus: _onItemFocus,
           itemSize: 100.0.w,
           itemCount: orientation == Orientation.portrait ?
