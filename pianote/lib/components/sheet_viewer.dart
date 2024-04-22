@@ -4,14 +4,14 @@ import 'package:pdfrx/pdfrx.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
-class PdfView extends StatefulWidget {
-  const PdfView({Key? key}) : super(key: key);
+class SheetView extends StatefulWidget {
+  const SheetView({Key? key}) : super(key: key);
 
   @override
-  State<PdfView> createState() => _PdfViewState();
+  State<SheetView> createState() => _SheetViewState();
 }
 
-class _PdfViewState extends State<PdfView> {
+class _SheetViewState extends State<SheetView> {
   // final documentRef = ValueNotifier<PdfDocumentRef?>(null);
   
   // List<PdfDocument> data = [];

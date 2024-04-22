@@ -1,46 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:pianote/components/category_download.dart';
+import 'package:pianote/components/category_file.dart';
+import 'package:unicons/unicons.dart';
 
-class SheetDrawer extends StatelessWidget {
+class SheetDrawer extends StatefulWidget {
+  const SheetDrawer({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context){
+  State<SheetDrawer> createState() => _SheetDrawerState();
+}
+
+class _SheetDrawerState extends State<SheetDrawer> with SingleTickerProviderStateMixin {
+  late TabController tabController;
+  static const List<Tab> drawerTabs = <Tab>[
+    Tab(
+      text: "모든 악보",
+    ),
+    Tab(
+      text: "다운로드",
+    ),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: drawerTabs.length, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return GFDrawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            GFDrawerHeader(
-              currentAccountPicture: GFAvatar(
-                radius: 80.0,
-                backgroundImage: NetworkImage("https://cdn.pixabay.com/photo/2017/12/03/18/04/christmas-balls-2995437_960_720.jpg"),
-              ),
-              otherAccountsPictures: <Widget>[
-                Image(
-                  image: NetworkImage("https://cdn.pixabay.com/photo/2019/12/20/00/03/road-4707345_960_720.jpg"),
-                  fit: BoxFit.cover,
-                ),
-                GFAvatar(
-                  child: Text("ab"),
-                )
-              ],
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text('user name'),
-                  Text('user@userid.com'),
-                ],
-              ),
+      child: Scaffold(
+        appBar: GFAppBar(
+          leading: GFIconButton(
+            padding: EdgeInsets.all(0.0),
+            color: Colors.white,
+            icon: Icon(UniconsLine.angle_left, color: Colors.blueAccent),
+            onPressed:  () => Navigator.of(context).pop(),
             ),
-            ListTile(
-              title: Text('Item 1'),
-              onTap: null,
+          elevation: 0.5,
+          backgroundColor: Colors.white,
+          title: GFSegmentTabs(
+            length: drawerTabs.length,
+            tabs: drawerTabs,
+            tabBarColor: Colors.grey[50],
+            labelColor: Colors.blueAccent,
+            labelStyle: TextStyle(fontWeight: FontWeight.w500, fontSize: 11.0),
+            indicatorSize: TabBarIndicatorSize.tab,
+            unselectedLabelColor: Colors.grey[600],
+            unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal, fontSize: 11.0),
+            indicator: BoxDecoration(
+              color:Colors.white,
+              border: Border.all(color: Colors.blueAccent, width:1.0),
+              borderRadius: BorderRadius.circular(4.0)
             ),
-            ListTile(
-              title: Text('Item 2'),
-              onTap: null,
-            ),
-          ],
+            indicatorWeight: 2.0,
+            border: Border.all(color: Colors.black12, width: 1.0),
+            borderRadius: BorderRadius.circular(4.0),
+            tabController: tabController,
+          )
         ),
-      );
+        body: GFTabBarView(
+          controller: tabController,
+          children: <Widget>[
+            FileManager(),
+            DownloadManager(),
+          ],)
+      )
+    );
   }
 }

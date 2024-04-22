@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
         statusBarColor: Colors.white,
       ));
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       drawer: SheetDrawer(),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(30.0),
@@ -21,15 +22,18 @@ class HomeScreen extends StatelessWidget {
         elevation: 0.7,
         leading: Builder( 
           builder: (context) => GFIconButton(
+            padding: EdgeInsets.all(2),
+            size: GFSize.SMALL,
+            color: Colors.white,
             icon: Icon(
-              UniconsLine.bars , color:Colors.black),
+              UniconsLine.bars , color:Colors.grey[700]),
               onPressed:(){
               Scaffold.of(context).openDrawer(); // openEndDrawer();
             }
           )
         )
       )),
-      body: SafeArea(child: PdfView())
+      body: SafeArea(child: SheetView())
     );
   }
 }

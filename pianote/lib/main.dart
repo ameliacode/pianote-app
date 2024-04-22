@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pianote/screens/home_screen.dart';
-import 'components/sheet_viewer.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
 
 void main() {
   runApp(
@@ -14,6 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        fontFamily: "Pretendard",
+      ),
       home: HomeScreen()
     );
   }
