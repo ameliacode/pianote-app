@@ -16,6 +16,8 @@ dependencies:
   path_provider_platform_interface: ^2.1.2
   pdfrx: ^1.0.51
   scroll_snap_list: ^0.9.1
+  sqflite: ^2.3.3
+  tabbed_view: ^1.18.0
   unicons: ^2.1.1
 
 dev_dependencies:
@@ -30,6 +32,7 @@ flutter:
 
   assets:
     - assets/
+    # - assets/dbs/database.db
   
   fonts:
   - family: Pretendard

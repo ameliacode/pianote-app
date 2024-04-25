@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:pdfrx/pdfrx.dart';
-// import 'package:snappy_list_view/snappy_list_view.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 class SheetView extends StatefulWidget {
-  const SheetView({Key? key}) : super(key: key);
+  final String filePath;
+  
+  const SheetView({Key? key, required this.filePath}) : super(key: key);
 
   @override
   State<SheetView> createState() => _SheetViewState();
 }
 
 class _SheetViewState extends State<SheetView> {
-  // final documentRef = ValueNotifier<PdfDocumentRef?>(null);
-  
-  // List<PdfDocument> data = [];
   int _focusedIndex = 0;
   GlobalKey<ScrollSnapListState> sslkey = GlobalKey();
 
@@ -29,7 +27,7 @@ class _SheetViewState extends State<SheetView> {
     return FlutterSizer( 
       builder:(context, orientation, screenType) {
       return PdfDocumentViewBuilder.asset(
-        'assets/sample.pdf',
+        widget.filePath,
         builder: (context, document) => ScrollSnapList(
           key: sslkey,
           listViewKey: widget.key,
@@ -62,7 +60,6 @@ class _SheetViewState extends State<SheetView> {
     );
     }
   }
-
 
 class PdfContainer extends StatelessWidget {
   final PdfDocument? document;

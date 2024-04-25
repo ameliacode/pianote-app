@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:pianote/components/sheet_drawer.dart';
+import 'package:pianote/components/sheet_tabview.dart';
 import 'package:pianote/components/sheet_viewer.dart';
 import 'package:flutter/services.dart';
 import 'package:unicons/unicons.dart';
@@ -33,7 +34,7 @@ class HomeScreen extends StatelessWidget {
           )
         )
       )),
-      body: SafeArea(child: SheetView())
+      body: SafeArea(child: SheetTabView())
     );
   }
 }
