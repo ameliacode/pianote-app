@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DownloadManager extends StatelessWidget {
+class CategoryDownloadScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

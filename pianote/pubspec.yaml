@@ -15,6 +15,7 @@ dependencies:
   path_provider: ^2.1.2
   path_provider_platform_interface: ^2.1.2
   pdfrx: ^1.0.51
+  provider: ^6.1.2
   scroll_snap_list: ^0.9.1
   sqflite: ^2.3.3
   tabbed_view: ^1.18.0

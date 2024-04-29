@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:pianote/components/category_download.dart';
-import 'package:pianote/components/category_file.dart';
+import 'package:pianote/screens/category_download_screen.dart';
+import 'package:pianote/screens/category_file_screen.dart';
 import 'package:unicons/unicons.dart';
 
 class SheetDrawer extends StatefulWidget {
@@ -70,8 +70,8 @@ class _SheetDrawerState extends State<SheetDrawer> with SingleTickerProviderStat
         body: GFTabBarView(
           controller: tabController,
           children: <Widget>[
-            FileManager(),
-            DownloadManager(),
+            CategoryFileScreen(),
+            CategoryDownloadScreen(),
           ],)
       )
     );

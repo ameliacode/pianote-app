@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:getwidget/getwidget.dart';
@@ -5,13 +6,13 @@ import 'package:unicons/unicons.dart';
 // import 'package:searchbar_animation/searchbar_animation.dart';
 import 'package:animated_search_bar/animated_search_bar.dart';
 
-class FileManager extends StatefulWidget {
-  const FileManager({Key? key}) : super(key: key);
+class CategoryFileScreen extends StatefulWidget {
+  const CategoryFileScreen({Key? key}) : super(key: key);
   @override
-  State<FileManager> createState() => _FileManagerState();
+  State<CategoryFileScreen> createState() => _FileManagerState();
 }
 
-class _FileManagerState extends State<FileManager> {
+class _FileManagerState extends State<CategoryFileScreen> {
   late String searchValue;
   late TextEditingController controller;
 

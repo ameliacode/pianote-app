@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:pianote/models/pdf_manager_model.dart';
 import 'package:pianote/screens/home_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    const MyApp());
+    const Pianote());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class Pianote extends StatelessWidget {
+  const Pianote({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        fontFamily: "Pretendard",
-      ),
-      home: HomeScreen()
+    return ChangeNotifierProvider(
+      create: (context) => PdfManager(),
+      child: MaterialApp(
+        theme: ThemeData(
+          fontFamily: "Pretendard",
+        ),
+        home: HomeScreen()
+        )
     );
   }
 }
