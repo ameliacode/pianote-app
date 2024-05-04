@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:pianote/components/sheet_drawer.dart';
 import 'package:pianote/components/sheet_tabview.dart';
-import 'package:pianote/components/sheet_viewer.dart';
 import 'package:flutter/services.dart';
+import 'package:pianote/models/pdf_manager_model.dart';
 import 'package:unicons/unicons.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -13,6 +14,7 @@ class HomeScreen extends StatelessWidget {
       SystemUiOverlayStyle(
         statusBarColor: Colors.white,
       ));
+    Provider.of<PdfManager>(context, listen: false).initPdfLists();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       drawer: SheetDrawer(),
@@ -34,7 +36,9 @@ class HomeScreen extends StatelessWidget {
           )
         )
       )),
-      body: SafeArea(child: SheetTabView())
+      body: SafeArea(
+        child: SheetTabView()
+      )
     );
   }
 }

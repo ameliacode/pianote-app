@@ -5,14 +5,20 @@ import 'package:pianote/models/pdf_manager_model.dart';
 import 'package:provider/provider.dart';
 
 class CategoryPdfManager extends StatelessWidget {
-  final dirName;
+  final String name;
 
-  //const CategoryPdfManager() 
+  const CategoryPdfManager({Key? key, required this.name}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context){
+    return SafeArea(
+      child: PdfList(dirName: name),
+    );
+  } 
 }
 
 class PdfList extends StatelessWidget {
   final dirName;
-
   const PdfList({Key ? key, this.dirName}) : super(key: key);
 
   @override
@@ -27,7 +33,9 @@ class PdfList extends StatelessWidget {
           )),
         Consumer<PdfManager>(builder: (context, pdfManager, _) {
           if (pdfManager.isMarking) {
-            
+            return Text("working");
+          } else {
+            return Text("Not working");
           }
         })
       ],

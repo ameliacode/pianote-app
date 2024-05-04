@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:pianote/components/category_file_manager.dart';
+import 'package:pianote/models/pdf_manager_model.dart';
 import 'package:unicons/unicons.dart';
 // import 'package:searchbar_animation/searchbar_animation.dart';
 import 'package:animated_search_bar/animated_search_bar.dart';
@@ -62,16 +64,6 @@ class _FileManagerState extends State<CategoryFileScreen> {
                       });
                     },
                   ),
-                  //child: SearchBar(
-                  //  padding: MaterialStatePropertyAll(EdgeInsets.fromLTRB(7, 0, 5, 2.5)),
-                  //  backgroundColor: MaterialStatePropertyAll(Colors.grey[100]),
-                  //  leading: const Icon(UniconsLine.search, color: Colors.black26, size: 15.0),
-                  //  elevation:  MaterialStatePropertyAll(0.0),
-                  //  constraints: BoxConstraints(maxHeight: 30.0),
-                  //  side: MaterialStatePropertyAll(BorderSide(width: 1.0, color: Colors.black12)),
-                  //  hintText: "악보 및 작곡가명을 입력하세요",
-                  //    hintStyle: MaterialStatePropertyAll(TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500, color: Colors.grey[500])),
-                  //),
                 ),
                 SizedBox(
                   width: 32.0,
@@ -100,7 +92,7 @@ class _FileManagerState extends State<CategoryFileScreen> {
             child: Container(
               width: double.infinity,
               color: Colors.grey[100],
-              child: Text("hello"), 
+              child: CategoryPdfManager(name: 'Files'), 
             ),
           ),
         ],

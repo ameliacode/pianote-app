@@ -1,14 +1,19 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pianote/models/pdf_file_model.dart';
 import 'package:pianote/models/pdf_list_model.dart';
 import 'package:pianote/utils/get_file_size.dart';
+
 
 class PdfManager extends ChangeNotifier {
   List<PdfFile> _markedPdfFile = <PdfFile>[];
   bool isMarking = false;
   static const _dirPaths = {
-    'Files': '/storage/emulated/0/pianote/files'
+    'Files': '/storage/emulated/0/Documents/pianote',
+    'Saves': '/storage/emulated/0/Documents/pianote/save',
+    'Favorites': '/storage/emulated/0/Documents/pianote/favorites'
   };
 
   Map<String, PdfListDir> _pdfListDirs = Map<String, PdfListDir>();
@@ -46,11 +51,9 @@ class PdfManager extends ChangeNotifier {
       var index = listDir.pdfFiles
           .indexWhere((file) => file.title == _markedPdfFile.first.title);
 
-      final newPdf = PdfFile(newFileName, _markedPdfFile.first.size, newPath);
+      final newPdf = PdfFile(newFileName, "", _markedPdfFile.first.size, newPath);
       listDir.update(newPdf, index);
       _pdfListDirs[listName] = listDir;
-      print(listDir);
-
       notifyListeners();
     }
   }
@@ -61,7 +64,7 @@ class PdfManager extends ChangeNotifier {
       PdfFile file = _markedPdfFile.removeLast();
       File sourceFile = File(file.path);
       final newPath =
-          '/storage/emulated/0/Pdf Manager/$to/${file.path.split('/').last}';
+          '${_dirPaths["Files"]}/$to/${file.path.split('/').last}';
       try {
         await sourceFile.rename(newPath);
       } on FileSystemException catch (e) {
@@ -76,7 +79,7 @@ class PdfManager extends ChangeNotifier {
       removePdfFromList(removeListName, file);
 
       // add to PdfList model
-      final newFile = PdfFile(file.title, file.size, newPath);
+      final newFile = PdfFile(file.title, "", file.size, newPath);
       addPdfToList(addListName, newFile);
     }
 
@@ -104,10 +107,7 @@ class PdfManager extends ChangeNotifier {
 
   // create app dirs
   static void createDirs() {
-    const String officeDirPath = '/storage/emulated/0/Pdf Manager/Office';
-    const String saveDirPath = '/storage/emulated/0/Pdf Manager/Save';
-    const String favDirPath = '/storage/emulated/0/Pdf Manager/Favorites';
-    final List<String> paths = [officeDirPath, saveDirPath, favDirPath];
+    final List<String> paths = _dirPaths.values.toList();
     for (var path in paths) {
       if (!Directory(path).existsSync()) {
         final pathDir = Directory(path);
@@ -116,6 +116,7 @@ class PdfManager extends ChangeNotifier {
     }
   }
 
+  
   void marked(PdfFile pdfFile) {
     if (_markedPdfFile.any((file) => file.title == pdfFile.title)) {
       _markedPdfFile.removeWhere((file) => file.title == pdfFile.title);
@@ -145,7 +146,7 @@ class PdfManager extends ChangeNotifier {
             final title = file.path.split('/').last;
             final path = file.path;
             final size = getFileSize(path);
-            pdfFiles.add(PdfFile(title, size, path));
+            pdfFiles.add(PdfFile(title, "", size, path));
           }
         }
       }

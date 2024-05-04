@@ -23,8 +23,8 @@ class PdfTile extends StatelessWidget {
         height: MediaQuery.of(context).size.height * .11,
         width: MediaQuery.of(context).size.width * .97,
         decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey),
-            borderRadius: BorderRadius.circular(12)
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(12)
         ),
         child: Row(
           children: <Widget>[
