@@ -8,8 +8,7 @@ import 'dart:io';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized(); 
-  var status = await checkPermission();
-  listFiles();
+  var status = await PdfManager().checkPermission();
   if (status) {
     PdfManager.createDirs(); 
   }
@@ -23,6 +22,7 @@ class Pianote extends StatefulWidget {
 }
 
 class _PianoteState extends State<Pianote>{
+ 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -34,32 +34,6 @@ class _PianoteState extends State<Pianote>{
         home: HomeScreen()
       )
     );
-  }
-}
-
-Future<bool> checkPermission() async {
-  var status = await Permission.storage.request();
-  if (status.isGranted) {
-      final directory = await getExternalStorageDirectory();
-      if (directory != null) {
-        if (!await directory.exists()) {
-          await directory.create(recursive: true);
-        }
-      }
-      return true;
-  }
-  return false;
-}
-
-void listFiles() async {
-  //Directory documentsDirectory = await getApplicationDocumentsDirectory();
-  Directory? documentsDirectory = await getExternalStorageDirectory();
-
-  List<FileSystemEntity>? files = documentsDirectory?.listSync(recursive: true);
-  if (files != null){
-    for (FileSystemEntity file in files) {
-      print(file.path);
-    }
   }
 }
 

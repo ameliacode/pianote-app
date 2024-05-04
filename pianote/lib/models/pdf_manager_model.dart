@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as p;
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pianote/models/pdf_file_model.dart';
 import 'package:pianote/models/pdf_list_model.dart';
 import 'package:pianote/utils/get_file_size.dart';
@@ -10,12 +12,12 @@ import 'package:pianote/utils/get_file_size.dart';
 class PdfManager extends ChangeNotifier {
   List<PdfFile> _markedPdfFile = <PdfFile>[];
   bool isMarking = false;
+  
   static const _dirPaths = {
     'Files': '/storage/emulated/0/Documents/pianote',
-    'Saves': '/storage/emulated/0/Documents/pianote/save',
-    'Favorites': '/storage/emulated/0/Documents/pianote/favorites'
+    // 'Favorites': '/storage/emulated/0/Documents/pianote/favorites'
   };
-
+  // Map<String, String> _dirPaths = {};
   Map<String, PdfListDir> _pdfListDirs = Map<String, PdfListDir>();
 
   int get markedCount => _markedPdfFile.length;
@@ -107,6 +109,9 @@ class PdfManager extends ChangeNotifier {
 
   // create app dirs
   static void createDirs() {
+    // Directory? fileDirectory = await getExternalStorageDirectory();
+    // _dirPaths['Files'] = fileDirectory.toString().replaceAll(RegExp(",|!|'"), "");
+    // _dirPaths['Favorites'] = p.join(fileDirectory.toString().replaceAll(RegExp(",|!|'"), ""), 'favorites');
     final List<String> paths = _dirPaths.values.toList();
     for (var path in paths) {
       if (!Directory(path).existsSync()) {
@@ -135,11 +140,12 @@ class PdfManager extends ChangeNotifier {
     this._markedPdfFile.clear();
   }
 
-  void initPdfLists() {
+  void initPdfLists() async {
     var paths = _dirPaths;
     paths.forEach((listName, path) async {
       final List<PdfFile> pdfFiles = <PdfFile>[];
       final dir = Directory(path);
+
       if (await dir.exists()) {
         await for (var file in dir.list(recursive: true)) {
           if (file.path.contains('.pdf')) {
@@ -159,4 +165,21 @@ class PdfManager extends ChangeNotifier {
     clearMarked();
     notifyListeners();
   }
+
+  Future<bool> checkPermission() async {
+    // var status = await Permission.storage.request();
+    var status = await Permission.manageExternalStorage.request();
+    if (status.isGranted) {
+        // final directory = await getExternalStorageDirectory();
+        final directory = Directory('/storage/emulated/0/Documents');
+        if (directory != null) {
+          if (!await directory.exists()) {
+            await directory.create(recursive: true);
+          }
+        }
+        return true;
+    }
+    return false;
+  }
 }
+

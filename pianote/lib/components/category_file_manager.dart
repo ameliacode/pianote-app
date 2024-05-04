@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:pianote/components/pdf_file_tile.dart';
 import 'package:pianote/models/pdf_file_model.dart';
 import 'package:pianote/models/pdf_manager_model.dart';
 import 'package:provider/provider.dart';
+import 'package:file_manager/file_manager.dart';
 
 class CategoryPdfManager extends StatelessWidget {
   final String name;
@@ -19,7 +22,9 @@ class CategoryPdfManager extends StatelessWidget {
 
 class PdfList extends StatelessWidget {
   final dirName;
-  const PdfList({Key ? key, this.dirName}) : super(key: key);
+  final FileManagerController controller = FileManagerController();
+
+  PdfList({Key ? key, this.dirName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +36,14 @@ class PdfList extends StatelessWidget {
             dirName: dirName, 
             pdfManager: pdfManager
           )),
-        Consumer<PdfManager>(builder: (context, pdfManager, _) {
-          if (pdfManager.isMarking) {
-            return Text("working");
-          } else {
-            return Text("Not working");
-          }
-        })
+        // Consumer<PdfManager>(builder: (context, pdfManager, _) {
+        //   if (pdfManager.isMarking) {
+        //     return Text("working");
+        //   } else {
+        //     return Text("Not working");
+        //   }
+        // }
+        // )
       ],
     );
   }
@@ -54,6 +60,7 @@ class PdfListContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(5.0),
       child: FutureBuilder<List<PdfFile>>(
         future: pdfManager.getPdfs(dirName),
         builder: (context, AsyncSnapshot<List<PdfFile>> snapshot) {

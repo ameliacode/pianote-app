@@ -14,17 +14,18 @@ class PdfTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pdfManager = Provider.of<PdfManager>(context, listen: false);
-
     return InkWell(
       child: Container(
+        padding: EdgeInsets.all(10.0),
         margin: isLastElement ? 
           EdgeInsets.only(bottom: 30)
           : EdgeInsets.only(bottom: 0),
-        height: MediaQuery.of(context).size.height * .11,
+        height: MediaQuery.of(context).size.height * .07,
         width: MediaQuery.of(context).size.width * .97,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(12)
+          color: Colors.white,
+          border: Border.all(color: Colors.black12),
+          borderRadius: BorderRadius.circular(5)
         ),
         child: Row(
           children: <Widget>[
@@ -35,13 +36,13 @@ class PdfTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    pdfFile.title,
-                    style: TextStyle(fontSize: 15),
+                    pdfFile.title.replaceAll('.pdf', ''),
+                    style: TextStyle(fontSize: 14),
                     overflow: TextOverflow.ellipsis
                   ),
                   Text(
                     pdfFile.size,
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w100)
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w100)
                   )
                 ],
               )
