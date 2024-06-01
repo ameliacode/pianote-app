@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:pianote/screens/category_download_screen.dart';
-import 'package:pianote/screens/category_file_screen.dart';
+import 'package:pianote/widgets/sheet_drawer_download.dart';
+import 'package:pianote/widgets/sheet_drawer_files.dart';
 import 'package:unicons/unicons.dart';
+import 'package:pianote/providers/recent_file_provider.dart';
 
 class SheetDrawer extends StatefulWidget {
-  const SheetDrawer({Key? key}) : super(key: key);
-  
+  const SheetDrawer({Key? key, required this.recentProvider}) : super(key: key);
+  final RecentFileProvider recentProvider;
+
   @override
   State<SheetDrawer> createState() => _SheetDrawerState();
 }
@@ -70,8 +72,8 @@ class _SheetDrawerState extends State<SheetDrawer> with SingleTickerProviderStat
         body: GFTabBarView(
           controller: tabController,
           children: <Widget>[
-            CategoryFileScreen(),
-            CategoryDownloadScreen(),
+            SheetDrawerFiles(recentProvider: widget.recentProvider,),
+            SheetDrawerDownload(),
           ],)
       )
     );

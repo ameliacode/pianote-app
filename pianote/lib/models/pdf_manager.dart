@@ -1,12 +1,10 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as p;
 import 'package:permission_handler/permission_handler.dart';
-import 'package:pianote/models/pdf_file_model.dart';
-import 'package:pianote/models/pdf_list_model.dart';
-import 'package:pianote/utils/get_file_size.dart';
+import 'package:pianote/models/pdf_file.dart';
+import 'package:pianote/models/pdf_list.dart';
+import 'package:pianote/utils/file_size_util.dart';
 
 
 class PdfManager extends ChangeNotifier {
@@ -103,8 +101,19 @@ class PdfManager extends ChangeNotifier {
   }
 
   // return dir pdfs
-  Future<List<PdfFile>> getPdfs(String dirName) async {
-    return _pdfListDirs[dirName]!.pdfFiles;
+  Future<List<PdfFile>> getPdfs(String dirName, {String query = ''}) async {
+    if (_pdfListDirs.containsKey(dirName) && _pdfListDirs[dirName] != null) {
+      List<PdfFile> pdfFiles = _pdfListDirs[dirName]!.pdfFiles;
+
+      // Filter the list based on the query
+      if (query.isNotEmpty || query!.length != 0) {
+        pdfFiles = pdfFiles.where((pdf) => pdf.title.contains(query)).toList();
+      }
+      return pdfFiles;
+    } else {
+      // Return an empty list or handle the error as needed
+      return [];
+    }
   }
 
   // create app dirs

@@ -1,4 +1,4 @@
-import 'package:pianote/models/pdf_file_model.dart';
+import 'package:pianote/models/pdf_file.dart';
 
 class PdfListDir {
   final String title;

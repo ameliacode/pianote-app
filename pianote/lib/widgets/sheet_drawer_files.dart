@@ -2,19 +2,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:pianote/components/category_file_manager.dart';
-import 'package:pianote/models/pdf_manager_model.dart';
+import 'package:pianote/widgets/sheet_drawer_file_list.dart';
 import 'package:unicons/unicons.dart';
-// import 'package:searchbar_animation/searchbar_animation.dart';
+import 'package:pianote/providers/recent_file_provider.dart';
 import 'package:animated_search_bar/animated_search_bar.dart';
 
-class CategoryFileScreen extends StatefulWidget {
-  const CategoryFileScreen({Key? key}) : super(key: key);
+class SheetDrawerFiles extends StatefulWidget {
+  const SheetDrawerFiles({Key? key, required this.recentProvider}) : super(key: key);
+  final RecentFileProvider recentProvider;
   @override
-  State<CategoryFileScreen> createState() => _FileManagerState();
+  State<SheetDrawerFiles> createState() => _FileManagerState();
 }
 
-class _FileManagerState extends State<CategoryFileScreen> {
+class _FileManagerState extends State<SheetDrawerFiles> {
   late String searchValue;
   late TextEditingController controller;
 
@@ -23,6 +23,12 @@ class _FileManagerState extends State<CategoryFileScreen> {
     super.initState();
     searchValue = '';
     controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -35,7 +41,7 @@ class _FileManagerState extends State<CategoryFileScreen> {
         children: [
           Container(
             height: 46,
-            padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+            padding: EdgeInsets.fromLTRB(15, 5, 10, 5),
             child: Row(
               children: [
                 Expanded(
@@ -92,7 +98,11 @@ class _FileManagerState extends State<CategoryFileScreen> {
             child: Container(
               width: double.infinity,
               color: Colors.grey[100],
-              child: CategoryPdfManager(name: 'Files'), 
+              child: SheetDrawerFileList(
+                name: 'Files', 
+                query: searchValue,
+                recentProvider: widget.recentProvider,
+              ), 
             ),
           ),
         ],

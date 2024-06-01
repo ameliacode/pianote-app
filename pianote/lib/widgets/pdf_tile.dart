@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:pianote/models/pdf_file_model.dart';
-import 'package:pianote/models/pdf_manager_model.dart';
+import 'package:pianote/models/pdf_file.dart';
+import 'package:pianote/models/pdf_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:unicons/unicons.dart';
 
 class PdfTile extends StatelessWidget {
   final PdfFile pdfFile;
   final bool isLastElement;
+  final VoidCallback? onTap;
 
-  PdfTile({Key? key, required this.pdfFile, required this.isLastElement}
+  const PdfTile({Key? key, required this.pdfFile, required this.isLastElement, required this.onTap}
   ) : super(key: key); 
 
   @override
@@ -18,8 +19,8 @@ class PdfTile extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(10.0),
         margin: isLastElement ? 
-          EdgeInsets.only(bottom: 30)
-          : EdgeInsets.only(bottom: 0),
+          EdgeInsets.only(bottom: 0)
+          : EdgeInsets.only(bottom: 2.5),
         height: MediaQuery.of(context).size.height * .07,
         width: MediaQuery.of(context).size.width * .97,
         decoration: BoxDecoration(
@@ -47,25 +48,26 @@ class PdfTile extends StatelessWidget {
                 ],
               )
             ),
-            pdfManager.isMarking 
-              ? Icon(
-                UniconsLine.check,
-                color: pdfManager.isMarked(pdfFile.title) 
-                  ? Colors.deepPurple : Colors.grey,
-              ) : SizedBox(
-                width: 10,
-              )
+            // pdfManager.isMarking 
+            //   ? Icon(
+            //     UniconsLine.check,
+            //     color: pdfManager.isMarked(pdfFile.title) 
+            //       ? Colors.deepPurple : Colors.grey,
+            //   ) : SizedBox(
+            //     width: 10,
+            //   )
           ],
         )
       ),
-      onTap: () {
-        if (pdfManager.isMarking) {
-          final pdfManager = Provider.of<PdfManager>(context, listen:false);
-          pdfManager.marked(pdfFile);
-        } else {
-          Text("hello");
-        }
-      },
+      onTap: onTap
+      //() {
+        // if (pdfManager.isMarking) {
+        //   final pdfManager = Provider.of<PdfManager>(context, listen:false);
+        //   pdfManager.marked(pdfFile);
+        // } else {
+        //   Text("hello");
+        // }
+        //},
     );
   }
 }

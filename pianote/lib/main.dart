@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pianote/models/pdf_manager_model.dart';
+import 'package:pianote/models/pdf_manager.dart';
 import 'package:pianote/screens/home_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'dart:io';
+import 'package:pianote/providers/recent_file_provider.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized(); 
@@ -12,7 +11,7 @@ Future<void> main() async {
   if (status) {
     PdfManager.createDirs(); 
   }
-  runApp(const Pianote());
+ runApp(const Pianote());
 }
 
 class Pianote extends StatefulWidget {
@@ -25,11 +24,15 @@ class _PianoteState extends State<Pianote>{
  
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => PdfManager(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => RecentFileProvider()),
+        ChangeNotifierProvider(create: (context) => PdfManager())
+      ],
       child: MaterialApp(
         theme: ThemeData(
           fontFamily: "Pretendard",
+          scaffoldBackgroundColor: Colors.grey[100]
         ),
         home: HomeScreen()
       )
