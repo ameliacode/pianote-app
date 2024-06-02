@@ -40,7 +40,7 @@ class _PopupButtonState extends State<PopupButton> {
                     widget.menuController.hideMenu();
                   },
                   child: Container(
-                    height: 40,
+                    height: 30,
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
                       children: <Widget>[
@@ -50,10 +50,8 @@ class _PopupButtonState extends State<PopupButton> {
                           color: Colors.grey,
                         ),
                         Expanded(
-                                child: Container(
-                          margin: EdgeInsets.only(left: 10),
-                          padding:
-                              EdgeInsets.symmetric(vertical: 10),
+                          child: Container(
+                          padding:EdgeInsets.symmetric(vertical: 1.0),
                           child: Text(
                             item.title,
                             style: TextStyle(
@@ -133,7 +131,8 @@ class _FilterPopupButtonState extends State<FilterPopupButton> {
   void initState() {
     super.initState();
     menuItems = [
-      ItemModel('정렬', UniconsLine.sorting),
+      ItemModel('제목', UniconsLine.sorting),
+      ItemModel('아티스트', UniconsLine.sorting),
     ];
   }
  

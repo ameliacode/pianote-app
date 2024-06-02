@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class RecentFileProvider extends ChangeNotifier {
+class HistoryProvider extends ChangeNotifier {
   static const String _recentFilesKey = 'recent_files';
+  static const String _recentSearchKey = 'recent_search';
   List<String> _recentFiles = [];
 
-  RecentFileProvider() {
+  HistoryProvider() {
     loadRecentFiles();
   }
 

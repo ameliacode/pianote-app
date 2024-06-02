@@ -48,8 +48,8 @@ class _FileManagerState extends State<SheetDrawerDownload> {
                       contentPadding: EdgeInsets.all(5.0)
                     ),
                     height:30.0,
-                    closeIcon: Icon(UniconsLine.times, color: Colors.grey, size: 20.0),
-                    searchIcon: Icon(UniconsLine.search, color: Colors.blueAccent, size: 20.0),
+                    closeIcon: Icon(UniconsLine.times, color: Colors.grey, size: 17.5),
+                    searchIcon: Icon(UniconsLine.search, color: Colors.blueAccent, size: 17.5),
                     label: "악보 및 작곡가명을 입력하세요.",
                     labelStyle: TextStyle(fontSize: 12.0, color: Colors.grey, fontWeight: FontWeight.normal),
                     searchStyle: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),

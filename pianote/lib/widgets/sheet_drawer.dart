@@ -3,11 +3,11 @@ import 'package:getwidget/getwidget.dart';
 import 'package:pianote/widgets/sheet_drawer_download.dart';
 import 'package:pianote/widgets/sheet_drawer_files.dart';
 import 'package:unicons/unicons.dart';
-import 'package:pianote/providers/recent_file_provider.dart';
+import 'package:pianote/providers/history_provider.dart';
 
 class SheetDrawer extends StatefulWidget {
   const SheetDrawer({Key? key, required this.recentProvider}) : super(key: key);
-  final RecentFileProvider recentProvider;
+  final HistoryProvider recentProvider;
 
   @override
   State<SheetDrawer> createState() => _SheetDrawerState();

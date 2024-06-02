@@ -4,7 +4,7 @@ import 'package:pianote/widgets/sheet_drawer.dart';
 import 'package:pianote/widgets/sheet_tabview.dart';
 import 'package:flutter/services.dart';
 import 'package:pianote/models/pdf_manager.dart';
-import 'package:pianote/providers/recent_file_provider.dart';
+import 'package:pianote/providers/history_provider.dart';
 import 'package:unicons/unicons.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
         statusBarColor: Colors.white,
       ));
     Provider.of<PdfManager>(context, listen: false).initPdfLists();
-    final recentProvider =  Provider.of<RecentFileProvider>(context, listen: false);
+    final recentProvider =  Provider.of<HistoryProvider>(context, listen: false);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pianote/models/pdf_manager.dart';
 import 'package:pianote/screens/home_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:pianote/providers/recent_file_provider.dart';
+import 'package:pianote/providers/history_provider.dart';
 
 
 Future<void> main() async {
@@ -26,7 +26,7 @@ class _PianoteState extends State<Pianote>{
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => RecentFileProvider()),
+        ChangeNotifierProvider(create: (context) => HistoryProvider()),
         ChangeNotifierProvider(create: (context) => PdfManager())
       ],
       child: MaterialApp(

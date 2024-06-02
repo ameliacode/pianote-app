@@ -5,13 +5,13 @@ import 'package:getwidget/getwidget.dart';
 import 'package:pianote/widgets/popup_button.dart';
 import 'package:pianote/widgets/sheet_drawer_file_list.dart';
 import 'package:unicons/unicons.dart';
-import 'package:pianote/providers/recent_file_provider.dart';
+import 'package:pianote/providers/history_provider.dart';
 import 'package:animated_search_bar/animated_search_bar.dart';
 import 'package:custom_pop_up_menu/custom_pop_up_menu.dart';
 
 class SheetDrawerFiles extends StatefulWidget {
   const SheetDrawerFiles({Key? key, required this.recentProvider}) : super(key: key);
-  final RecentFileProvider recentProvider;
+  final HistoryProvider recentProvider;
   @override
   State<SheetDrawerFiles> createState() => _FileManagerState();
 }
@@ -34,6 +34,8 @@ class _FileManagerState extends State<SheetDrawerFiles> {
   @override
   void dispose() {
     textController.dispose();
+    editController.dispose();
+    utilController.dispose();
     super.dispose();
   }
 

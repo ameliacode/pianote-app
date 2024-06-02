@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pianote/widgets/sheet_viewer.dart';
-import 'package:pianote/providers/recent_file_provider.dart';
+import 'package:pianote/providers/history_provider.dart';
 import 'package:tabbed_view/tabbed_view.dart';
 import 'package:provider/provider.dart';
 
 class SheetTabView extends StatefulWidget {
   const SheetTabView({Key? key, required this.recentProvider}) : super(key: key);
-  final RecentFileProvider recentProvider; // Specify the type of recentProvider
+  final HistoryProvider recentProvider; // Specify the type of recentProvider
 
   @override
   State<SheetTabView> createState() => _SheetTabViewState();
@@ -44,13 +44,13 @@ class _SheetTabViewState extends State<SheetTabView> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final recentFiles = Provider.of<RecentFileProvider>(context).recentFiles;
+    final recentFiles = Provider.of<HistoryProvider>(context).recentFiles;
     _initializeTabs(recentFiles);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RecentFileProvider>(
+    return Consumer<HistoryProvider>(
       builder: (context, pdfFileProvider, _) {
         return TabbedViewTheme(
           data: TabbedViewThemeData.mobile(

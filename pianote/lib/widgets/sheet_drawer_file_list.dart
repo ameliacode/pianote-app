@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pianote/widgets/pdf_tile.dart';
-import 'package:pianote/providers/recent_file_provider.dart';
+import 'package:pianote/providers/history_provider.dart';
 import 'package:pianote/models/pdf_file.dart';
 import 'package:pianote/models/pdf_manager.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +9,7 @@ import 'package:file_manager/file_manager.dart';
 class SheetDrawerFileList extends StatelessWidget {
   final String name;
   final String query;
-  final RecentFileProvider recentProvider;
+  final HistoryProvider recentProvider;
   const SheetDrawerFileList({Key? key, required this.name, required this.query, required this.recentProvider}) : super(key: key);
 
   @override
@@ -24,7 +24,7 @@ class PdfList extends StatelessWidget {
   final String dirName;
   final String query;
   final FileManagerController controller = FileManagerController();
-  final RecentFileProvider recentProvider;
+  final HistoryProvider recentProvider;
   PdfList({Key? key, required this.dirName, required this.query, required this.recentProvider}) : super(key: key);
 
   @override
@@ -55,7 +55,7 @@ class PdfListContainer extends StatelessWidget {
 
   final String dirName;
   final String query;
-  final RecentFileProvider recentProvider;
+  final HistoryProvider recentProvider;
   final pdfManager;
 
   @override
