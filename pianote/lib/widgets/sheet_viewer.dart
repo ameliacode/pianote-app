@@ -4,7 +4,7 @@ import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 class SheetViewer extends StatefulWidget {
-  final String filePath;
+  final String? filePath;
   const SheetViewer({Key? key, required this.filePath}) : super(key: key);
 
   @override
@@ -24,39 +24,39 @@ class _SheetViewerState extends State<SheetViewer> {
   @override
   Widget build(BuildContext context) {
     return FlutterSizer( 
-      builder:(context, orientation, screenType) {
-      return PdfDocumentViewBuilder.file(
-        widget.filePath,
-        builder: (context, document) => ScrollSnapList(
-          key: sslkey,
-          listViewKey: widget.key,
-          scrollDirection: Axis.horizontal,
-          scrollPhysics: PageScrollPhysics(),
-          onItemFocus: _onItemFocus,
-          itemSize: 100.0.w,
-          itemCount: orientation == Orientation.portrait ?
-             document?.pages.length ?? 0 : (document?.pages.length ?? -1) ~/ 2 + 1,
-          itemBuilder: (context, index) {
-            if (orientation != Orientation.portrait) {
-              index *= 2;
+        builder:(context, orientation, screenType) {
+        return PdfDocumentViewBuilder.file(
+          widget.filePath.toString(),
+          builder: (context, document) => ScrollSnapList(
+            key: sslkey,
+            listViewKey: widget.key,
+            scrollDirection: Axis.horizontal,
+            scrollPhysics: PageScrollPhysics(),
+            onItemFocus: _onItemFocus,
+            itemSize: 100.0.w,
+            itemCount: orientation == Orientation.portrait ?
+              document?.pages.length ?? 0 : (document?.pages.length ?? -1) ~/ 2 + 1,
+            itemBuilder: (context, index) {
+              if (orientation != Orientation.portrait) {
+                index *= 2;
+              }
+              return Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.all(0),
+                height: 100.0.h,
+                width: 100.0.w,
+                color: Colors.white,
+                child: PdfContainer(
+                  document: document, 
+                  index: index,
+                  pageCount: orientation == Orientation.portrait ? 1:2
+                )
+              );
             }
-            return Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.all(0),
-              height: 100.0.h,
-              width: 100.0.w,
-              color: Colors.white,
-              child: PdfContainer(
-                document: document, 
-                index: index,
-                pageCount: orientation == Orientation.portrait ? 1:2
-              )
-            );
-          }
-        )
+          )
+        );
+        }
       );
-      }
-    );
     }
   }
 

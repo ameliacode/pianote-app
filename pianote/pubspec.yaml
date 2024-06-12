@@ -12,6 +12,8 @@ dependencies:
   file_manager: ^1.0.2
   flutter:
     sdk: flutter
+  get_it: ^7.7.0
+  get_it_mixin: ^4.2.2
   getwidget: ^4.0.0
   open_file: ^3.3.2
   path_provider: ^2.1.3

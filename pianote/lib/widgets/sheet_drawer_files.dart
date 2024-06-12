@@ -10,8 +10,9 @@ import 'package:animated_search_bar/animated_search_bar.dart';
 import 'package:custom_pop_up_menu/custom_pop_up_menu.dart';
 
 class SheetDrawerFiles extends StatefulWidget {
-  const SheetDrawerFiles({Key? key, required this.recentProvider}) : super(key: key);
-  final HistoryProvider recentProvider;
+  //final HistoryProvider recentProvider;
+  //const SheetDrawerFiles({Key? key, required this.recentProvider}) : super(key: key);
+
   @override
   State<SheetDrawerFiles> createState() => _FileManagerState();
 }
@@ -105,7 +106,7 @@ class _FileManagerState extends State<SheetDrawerFiles> {
               child: SheetDrawerFileList(
                 name: 'Files', 
                 query: searchValue,
-                recentProvider: widget.recentProvider,
+                //recentProvider: widget.recentProvider,
               ), 
             ),
           ),

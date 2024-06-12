@@ -3,7 +3,7 @@ import 'package:pianote/models/pdf_manager.dart';
 import 'package:pianote/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:pianote/providers/history_provider.dart';
-
+import 'package:get_it/get_it.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized(); 
@@ -11,7 +11,8 @@ Future<void> main() async {
   if (status) {
     PdfManager.createDirs(); 
   }
- runApp(const Pianote());
+  GetIt.I.registerSingleton(HistoryProvider(), signalsReady: true);
+  runApp(const Pianote());
 }
 
 class Pianote extends StatefulWidget {
@@ -21,12 +22,11 @@ class Pianote extends StatefulWidget {
 }
 
 class _PianoteState extends State<Pianote>{
- 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => HistoryProvider()),
+        //ChangeNotifierProvider(create: (context) => HistoryProvider()),
         ChangeNotifierProvider(create: (context) => PdfManager())
       ],
       child: MaterialApp(

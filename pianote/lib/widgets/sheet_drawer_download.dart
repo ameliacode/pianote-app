@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get_it_mixin/get_it_mixin.dart';
+import 'package:pianote/providers/history_provider.dart';
+import 'package:pianote/widgets/search_recent.dart';
 import 'package:unicons/unicons.dart';
 import 'package:animated_search_bar/animated_search_bar.dart';
 
-class SheetDrawerDownload extends StatefulWidget {
-  const SheetDrawerDownload({Key? key}) : super(key: key);
+
+class SheetDrawerDownload extends StatefulWidget with GetItStatefulWidgetMixin{
+  //final HistoryProvider recentProvider;
+  //const SheetDrawerDownload({Key? key, required this.recentProvider}) : super(key: key);
   @override
   State<SheetDrawerDownload> createState() => _FileManagerState();
 }
 
-class _FileManagerState extends State<SheetDrawerDownload> {
+class _FileManagerState extends State<SheetDrawerDownload> with GetItStateMixin {
   late String searchValue;
   late TextEditingController controller;
 
@@ -31,7 +36,7 @@ class _FileManagerState extends State<SheetDrawerDownload> {
         children: [
           Container(
             height: 46,
-            padding: EdgeInsets.fromLTRB(15, 5, 10, 5),
+            padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
             child: Row(
               children: [
                 Expanded(
@@ -59,6 +64,11 @@ class _FileManagerState extends State<SheetDrawerDownload> {
                         searchValue = value;
                       });
                     },
+                    onFieldSubmitted: (value) async {
+                      //await widget.recentProvider.addRecentSearch(value);
+                      //print(widget.recentProvider.recentSearch);
+                      await get<HistoryProvider>().addRecentSearch(value);
+                    },
                   ),
                 ),
               ],
@@ -68,7 +78,7 @@ class _FileManagerState extends State<SheetDrawerDownload> {
             child: Container(
               width: double.infinity,
               color: Colors.grey[100],
-              child: Text("hello"), 
+              child: SearchRecent(searchValue:searchValue), 
             ),
           ),
         ],

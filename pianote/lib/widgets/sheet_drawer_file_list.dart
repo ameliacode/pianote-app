@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:pianote/widgets/pdf_tile.dart';
 import 'package:pianote/providers/history_provider.dart';
 import 'package:pianote/models/pdf_file.dart';
@@ -9,13 +10,13 @@ import 'package:file_manager/file_manager.dart';
 class SheetDrawerFileList extends StatelessWidget {
   final String name;
   final String query;
-  final HistoryProvider recentProvider;
-  const SheetDrawerFileList({Key? key, required this.name, required this.query, required this.recentProvider}) : super(key: key);
+  //final HistoryProvider recentProvider;
+  const SheetDrawerFileList({Key? key, required this.name, required this.query,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: PdfList(dirName: name, query:query, recentProvider: recentProvider,),
+      child: PdfList(dirName: name, query:query, ),
     );
   }
 }
@@ -24,8 +25,8 @@ class PdfList extends StatelessWidget {
   final String dirName;
   final String query;
   final FileManagerController controller = FileManagerController();
-  final HistoryProvider recentProvider;
-  PdfList({Key? key, required this.dirName, required this.query, required this.recentProvider}) : super(key: key);
+  // final HistoryProvider recentProvider;
+  PdfList({Key? key, required this.dirName, required this.query, }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class PdfList extends StatelessWidget {
             dirName: dirName,
             query: query,
             pdfManager: pdfManager,
-            recentProvider: recentProvider,
+            //recentProvider: recentProvider,
           ),
         ),
       ],
@@ -45,17 +46,17 @@ class PdfList extends StatelessWidget {
   }
 }
 
-class PdfListContainer extends StatelessWidget {
-  const PdfListContainer({Key? key, 
+class PdfListContainer extends StatelessWidget with GetItMixin{
+  PdfListContainer({Key? key, 
     required this.dirName, 
     required this.query,
     required this.pdfManager,
-    required this.recentProvider
+    //required this.recentProvider
   }) : super(key: key);
 
   final String dirName;
   final String query;
-  final HistoryProvider recentProvider;
+  //final HistoryProvider recentProvider;
   final pdfManager;
 
   @override
@@ -74,8 +75,9 @@ class PdfListContainer extends StatelessWidget {
                   pdfFile: snapshot.data![index],
                   isLastElement: index == itemLength - 1,
                   onTap: () {
-                    recentProvider.addRecentFile(snapshot.data![index].path);
-                    // Add your logic here for what you want to do when the user clicks on a file
+                    //recentProvider.addRecentFile(snapshot.data![index].path);
+                    get<HistoryProvider>().setRecentFile(snapshot.data![index].path);
+                    get<HistoryProvider>().addRecentFile(snapshot.data![index].path);
                   },
                 );
               },

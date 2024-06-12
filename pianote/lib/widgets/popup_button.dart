@@ -36,7 +36,6 @@ class _PopupButtonState extends State<PopupButton> {
                 (item) => GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onTap: () {
-                    print("onTap");
                     widget.menuController.hideMenu();
                   },
                   child: Container(

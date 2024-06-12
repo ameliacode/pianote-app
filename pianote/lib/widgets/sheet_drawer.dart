@@ -6,8 +6,8 @@ import 'package:unicons/unicons.dart';
 import 'package:pianote/providers/history_provider.dart';
 
 class SheetDrawer extends StatefulWidget {
-  const SheetDrawer({Key? key, required this.recentProvider}) : super(key: key);
-  final HistoryProvider recentProvider;
+  //final HistoryProvider recentProvider;
+  //const SheetDrawer({Key? key, required this.recentProvider}) : super(key: key);
 
   @override
   State<SheetDrawer> createState() => _SheetDrawerState();
@@ -72,8 +72,10 @@ class _SheetDrawerState extends State<SheetDrawer> with SingleTickerProviderStat
         body: GFTabBarView(
           controller: tabController,
           children: <Widget>[
-            SheetDrawerFiles(recentProvider: widget.recentProvider,),
-            SheetDrawerDownload(),
+            //SheetDrawerFiles(recentProvider: widget.recentProvider,),
+            //SheetDrawerDownload(recentProvider: widget.recentProvider),
+            SheetDrawerFiles(),
+            SheetDrawerDownload()
           ],)
       )
     );
