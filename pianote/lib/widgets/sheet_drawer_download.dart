@@ -36,7 +36,7 @@ class _FileManagerState extends State<SheetDrawerDownload> with GetItStateMixin 
         children: [
           Container(
             height: 46,
-            padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
+            padding: EdgeInsets.fromLTRB(10, 4, 0, 2),
             child: Row(
               children: [
                 Expanded(

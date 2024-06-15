@@ -4,6 +4,7 @@ import 'package:pianote/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:pianote/providers/history_provider.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized(); 

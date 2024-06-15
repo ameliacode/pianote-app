@@ -26,6 +26,7 @@ dependencies:
   sqflite: ^2.3.3
   tabbed_view: ^1.18.0
   unicons: ^2.1.1
+  watch_it: ^1.4.2
 
 dev_dependencies:
   flutter_test:

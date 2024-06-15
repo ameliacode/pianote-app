@@ -50,7 +50,7 @@ class _FileManagerState extends State<SheetDrawerFiles> {
         children: [
           Container(
             height: 46,
-            padding: EdgeInsets.fromLTRB(15, 5, 10, 5),
+            padding: EdgeInsets.fromLTRB(10, 4, 10, 2),
             child: Row(
               children: [
                 Expanded(

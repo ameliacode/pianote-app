@@ -7,8 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:pianote/models/pdf_manager.dart';
 import 'package:pianote/providers/history_provider.dart';
 import 'package:pianote/widgets/sheet_tab.dart';
-import 'package:pianote/widgets/sheet_viewer.dart';
-import 'package:tabbed_view/tabbed_view.dart';
 import 'package:unicons/unicons.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> with GetItStateMixin{
     
     // recentProvider is for tabview
     //final recentProvider =  Provider.of<HistoryProvider>(context, listen: false);
-    String title = get<HistoryProvider>().getRecentFile().toString().replaceAll('.pdf','');
+    final title = get<HistoryProvider>().getRecentFile();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -44,7 +42,19 @@ class _HomeScreenState extends State<HomeScreen> with GetItStateMixin{
       appBar: _showAppBar ? PreferredSize(
         preferredSize: Size.fromHeight(30.0),
         child:  GFAppBar(
-        title: Text(title, ),
+        title: FutureBuilder<String>(
+          future: title, 
+          builder: (context, snapshot) {
+            var data = snapshot.data;
+            if (data == null || data!.length == 0) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+            final _title = data.split('\/').last.replaceAll('.pdf','');
+            return Text(_title, 
+            style: TextStyle(color: Colors.grey[700], fontSize: 12.5));
+            }
+          }
+        ) ,
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0.7,
@@ -61,22 +71,21 @@ class _HomeScreenState extends State<HomeScreen> with GetItStateMixin{
           )
         )
       )) : null,
-      body: GestureDetector(
+      body: 
+        GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
           setState(() {
-            _showAppBar = !_showAppBar;
+          _showAppBar = !_showAppBar;
           });
         },
-        child: SheetTabView()
-        // child: SheetTabView(recentProvider: get<HistoryProvider>())
-        // child: Padding(
-        //   padding: EdgeInsets.only(top: _showAppBar ? 0 : 30),
-        //   child: SafeArea(
-        //     child: SheetTab()
-        //   )
-        // )
-      )
+         child: Padding(
+           padding: EdgeInsets.only(top: _showAppBar ? 0 : 30),
+           child: SafeArea(
+             child: SheetTab()
+           )
+         )
+        )
     );
   }
 }

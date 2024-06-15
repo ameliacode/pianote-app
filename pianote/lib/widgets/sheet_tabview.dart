@@ -15,21 +15,19 @@ class SheetTabView extends StatefulWidget with GetItStatefulWidgetMixin{
 
 class _SheetTabViewState extends State<SheetTabView> with GetItStateMixin {
   late TabbedViewController _controller;
+  late var _future;
   late List<String> recentFiles;
 
   @override
   void initState() {
     super.initState();
     _controller = TabbedViewController([]);
-    // _initializeTabs(widget.recentProvider.recentFiles);
-    recentFiles = get<HistoryProvider>().getRecentFiles();
-    _initializeTabs(recentFiles);
+    _future = get<HistoryProvider>().getRecentFiles();
+    //recentFiles = get<HistoryProvider>().recentFiles;
+    //_initializeTabs(recentFiles);
   }
 
- 
-
   void _initializeTabs(List<String> recentFiles) {
-    print(recentFiles.length);
     final tabs = recentFiles.map((filePath) {
       return TabData(
         value: filePath,
@@ -40,47 +38,45 @@ class _SheetTabViewState extends State<SheetTabView> with GetItStateMixin {
     _controller = TabbedViewController(tabs);
   }
 
-  // @override
-  // void didUpdateWidget(SheetTabView oldWidget) {
-  //   super.didUpdateWidget(oldWidget);
-  //   if (oldWidget.recentProvider != widget.recentProvider) {
-  //     _initializeTabs(widget.recentProvider.recentFiles);
-  //   }
-  // }
-
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   // final recentFiles = Provider.of<HistoryProvider>(context).recentFiles;
-  //   // final recentFiles = widget.recentProvider.recentFiles;
-  //    recentFiles = watchOnly((HistoryProvider h) => h.recentFiles);
-  //   _initializeTabs(recentFiles);
-  // }
-
   @override
   Widget build(BuildContext context) {
-  recentFiles = watchOnly((HistoryProvider h) => h.recentFiles);
+  _future = watchOnly((HistoryProvider h) => h.getRecentFiles());
+  
+  return FutureBuilder<List<String>>(
+    future: _future,
+    builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return Center(child: CircularProgressIndicator());
+    } else if (snapshot.hasError) {
+      return Center(child: Text('Error: ${snapshot.error}'));
+    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+      return Center(child: Text('No recent searches found.'));
+    } else {
+      recentFiles = snapshot.data! ?? [];
+      _initializeTabs(recentFiles);
       return TabbedViewTheme(
-          data: TabbedViewThemeData.mobile(
-          accentColor: Colors.blueAccent,
-        ),
-        child: recentFiles.length != 0 ?  
-          TabbedView(
-            controller: _controller,
-            onTabClose: (tabIndex, tabData) async {
-              await get<HistoryProvider>().removeRecentFile(tabData.value);
-            },
-          ) :
-          Container(
-            alignment: Alignment.center,
-            child: Text(
-              "🎼 파일이 없습니다. 악보 파일을 열어주세요! 😥",
-              style: TextStyle(
-                fontWeight: FontWeight.w600,),
-            ),
-          )
+      data: TabbedViewThemeData.mobile(
+      accentColor: Colors.blueAccent,
+      ),
+      child: recentFiles.length != 0 ?  
+        TabbedView(
+          controller: _controller,
+          onTabClose: (tabIndex, tabData) async {
+            await get<HistoryProvider>().removeRecentFile(tabData.value);
+          },
+        ) :
+        Container(
+          alignment: Alignment.center,
+          child: Text(
+            "🎼 파일이 없습니다. 악보 파일을 열어주세요! 😥",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,),
+          ),
+        )
       );
-    }
+    }}
+  );
+  }
 }
 
 // PREVIOUS VER.
