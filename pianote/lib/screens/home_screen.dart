@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:pianote/widgets/custom_appbar.dart';
 import 'package:pianote/widgets/sheet_drawer.dart';
 import 'package:pianote/widgets/sheet_tabview.dart';
 import 'package:flutter/services.dart';
@@ -16,11 +17,16 @@ class HomeScreen extends StatefulWidget with GetItStatefulWidgetMixin{
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with GetItStateMixin{ 
+class _HomeScreenState extends State<HomeScreen> with GetItStateMixin, SingleTickerProviderStateMixin{ 
   bool _showAppBar = true;
+  late final AnimationController _controller;
 
   void initState() {
     super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 400),
+    );
     Provider.of<PdfManager>(context, listen: false).initPdfLists();
   }
 
@@ -36,10 +42,11 @@ class _HomeScreenState extends State<HomeScreen> with GetItStateMixin{
     final title = get<HistoryProvider>().getRecentFile();
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
-      //drawer: SheetDrawer(recentProvider: recentProvider,),
       drawer: SheetDrawer(),
-      appBar: _showAppBar ? PreferredSize(
+      appBar: CustomAppBar(
+        child: PreferredSize(
         preferredSize: Size.fromHeight(30.0),
         child:  GFAppBar(
         title: FutureBuilder<String>(
@@ -47,45 +54,49 @@ class _HomeScreenState extends State<HomeScreen> with GetItStateMixin{
           builder: (context, snapshot) {
             var data = snapshot.data;
             if (data == null || data!.length == 0) {
-              return const Center(child: CircularProgressIndicator());
-            } else {
-            final _title = data.split('\/').last.replaceAll('.pdf','');
+              return const Center(child: Text(''));
+           } else {
+           final _title = data.split('\/').last.replaceAll('.pdf','');
             return Text(_title, 
             style: TextStyle(color: Colors.grey[700], fontSize: 12.5));
             }
           }
         ) ,
-        centerTitle: true,
+       centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0.7,
         leading: Builder( 
           builder: (context) => GFIconButton(
             padding: EdgeInsets.all(2),
             size: GFSize.SMALL,
-            color: Colors.white,
+           color: Colors.white,
             icon: Icon(
-              UniconsLine.bars , color:Colors.grey[700]),
+             UniconsLine.bars , color:Colors.grey[700]),
               onPressed:(){
               Scaffold.of(context).openDrawer(); // openEndDrawer();
             }
           )
         )
-      )) : null,
-      body: 
-        GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: () {
-          setState(() {
-          _showAppBar = !_showAppBar;
-          });
-        },
-         child: Padding(
-           padding: EdgeInsets.only(top: _showAppBar ? 0 : 30),
-           child: SafeArea(
+        )), 
+        controller: _controller, 
+        visible: _showAppBar),
+      body: Stack(
+        children: [
+          IgnorePointer( //riverpod state로 전부 바꾸기
+            child: SafeArea(
              child: SheetTab()
-           )
-         )
-        )
+           ),),
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
+              setState(() {
+              _showAppBar = !_showAppBar;
+              });
+              print("app bar visible");
+            }
+          ),
+        ],
+      )
     );
   }
 }

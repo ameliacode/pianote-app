@@ -20,7 +20,8 @@ class _SheetTabState extends State<SheetTab> with GetItStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    _future = watchOnly((HistoryProvider h) => h.getRecentFile());
+    //_future = watchOnly((HistoryProvider h) => h.getRecentFile());
+    //final value = watchXOnly((HistoryProvider h) => h.recentFile);
     return FutureBuilder(
       future: _future, 
       builder: (context, snapshot) {

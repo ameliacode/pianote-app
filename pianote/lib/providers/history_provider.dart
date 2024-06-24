@@ -10,6 +10,7 @@ class HistoryProvider extends ChangeNotifier {
   static const String _recentFilesKey = 'recent_files';
   static const String _recentSearchKey = 'recent_search';
 
+  ValueNotifier<String> recentFile = ValueNotifier<String>('');
   List<String> _recentFiles = [];
   List<String> _recentSearch = [];
 
@@ -18,12 +19,13 @@ class HistoryProvider extends ChangeNotifier {
      _init();
   }
 
-  String get recentFile =>  _prefsInstance?.getString(_recentFileKey) ?? '';
+  //String get recentFile =>  _prefsInstance?.getString(_recentFileKey) ?? '';
   List<String> get recentFiles => _prefsInstance?.getStringList(_recentFilesKey) ?? [];
   List<String> get recentSearch => _prefsInstance?.getStringList(_recentSearchKey) ?? [];
 
   Future<void> _init() async {
     _prefsInstance = await SharedPreferences.getInstance();
+    recentFile.value = await getRecentFile();
   }
 
   // for single string path
@@ -32,8 +34,8 @@ class HistoryProvider extends ChangeNotifier {
   }
 
   Future<void> setRecentFile(String filePath) async {
+    recentFile.value = filePath;
     await _prefsInstance?.setString(_recentFileKey, filePath);
-    print("hello");
     notifyListeners();
   }
 
